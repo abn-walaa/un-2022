@@ -4,11 +4,17 @@ const express = require('express');
 const app = express();
 const avarage = require('./routers/avg');
 const cors = require('cors')
+const limit = require('express-rate-limit')
+const helmet = require('helmet')
 
+app.use(limit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
 
-
-
-
+}))
+app.use(helmet())
 app.use(cors())
 app.use(express.json())
 app.get('*', express.static(path.join(__dirname, "../public/")))
