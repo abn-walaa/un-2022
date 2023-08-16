@@ -10,7 +10,9 @@ router.post('/accpet_at', async (req, res) => {
       throw new Error('please provide the department and avrage');
     }
     const { rows } = await Pool.query(
-      `select * from data where average<=$2 and section=$1`,
+      `select * from data where average<=$2 and section=$1
+      order by average DESC
+      `,
       [department, avrage]
     );
     res.send(rows);
